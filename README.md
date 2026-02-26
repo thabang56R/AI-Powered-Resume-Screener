@@ -1,17 +1,112 @@
-# Agentic Resume Screener — Full MERN + Docker Compose
+# AI Resume Screener (MERN + OpenAI + Evidence + Audit Trail)
 
-This repo is a full **MERN** (MongoDB, Express, React, Node) project scaffold with an Agentic orchestrator that uses a free rule-based LLM adapter by default. It includes Dockerfiles and a `docker-compose.yml` so you can run the entire stack locally.
+An enterprise-style AI-powered resume screening system built with:
 
-## Quick start (requires Docker & Docker Compose)
-1. Copy `backend/.env.example` to `backend/.env` and set any optional tokens.
-2. From the project root run:
+- MongoDB
+- Express.js
+- React (Vite)
+- Node.js
+- OpenAI API
 
-```bash
-docker compose up --build
-```
+## 🚀 Features
 
-3. Open the app UI at http://localhost:3000
+### AI Evaluation
+- Match score (0–100)
+- Matched & missing skills
+- Strengths & risks
+- Improvement suggestions
+- Interview questions
 
-## Development (without Docker)
-- Backend: `cd backend && npm install && npm run dev` (needs Node 18+)
-- Frontend: `cd frontend && npm install && npm run dev` (Vite dev server)
+### 🔎 Evidence-Based Scoring
+Each matched skill includes extracted evidence snippets from the resume text.
+No blind AI scoring — results are grounded in real resume content.
+
+### 📊 Batch Screening
+- Evaluate multiple resumes at once
+- Ranked shortlist table
+- Recruiter workflow ready
+
+### 🧾 Recruiter Panel
+- Candidate status tracking:
+  - New
+  - Shortlisted
+  - Interview
+  - Rejected
+  - Hired
+- Internal notes per candidate
+
+### 🔐 Audit Trail
+Every change (status or notes) is logged with:
+- Who made the change
+- What changed
+- When it happened
+- Before/After snapshot
+
+Enterprise-level transparency and accountability.
+
+---
+
+## 🛠️ Tech Stack
+
+Frontend:
+- React + Vite
+- React Router
+- Custom UI
+
+Backend:
+- Express.js
+- MongoDB (Mongoose)
+- OpenAI API
+- Zod validation
+- Rate limiting
+- Audit logging
+
+---
+
+## 📦 Setup
+
+### Backend
+
+cd backend
+npm install
+npm run dev
+
+
+Required `.env`:
+
+PORT=8080
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_secret
+OPENAI_API_KEY=your_key
+OPENAI_MODEL=gpt-4o-mini
+CLIENT_ORIGIN=http://localhost:5173
+
+
+### Frontend
+
+cd client
+npm install
+npm run dev
+
+
+---
+
+## 🌍 Deployment
+- Backend → Render
+- Frontend → Vercel
+
+---
+
+## 🎯 Why This Project Stands Out
+
+- Explainable AI scoring
+- Evidence extraction from resume text
+- Recruiter workflow design
+- Audit trail system
+- Robust error handling (quota, 429, etc.)
+- Production-ready structure
+
+---
+
+## 📌 Author
+Thabang Rakeng
