@@ -36,6 +36,10 @@ app.use("/api/audit", auditRoutes);
 
 const PORT = process.env.PORT || 8080;
 
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Server listening on ${PORT}`);
+});
+
 async function start() {
   if (!process.env.MONGO_URI) throw new Error("Missing MONGO_URI");
   await mongoose.connect(process.env.MONGO_URI);
