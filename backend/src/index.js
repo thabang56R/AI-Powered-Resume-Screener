@@ -20,14 +20,29 @@ app.use(helmet());
 app.use(express.json({ limit: "2mb" }));
 app.use(morgan("dev"));
 
+const allowedOrigins = (process.env.CLIENT_ORIGIN || "")
+  .split(",")
+  .map((s) => s.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN?.split(",") ?? "*",
+    origin: (origin, cb) => {
+      if (!origin) return cb(null, true);
+      if (allowedOrigins.includes(origin)) return cb(null, true);
+      if (origin.endsWith(".vercel.app")) return cb(null, true);
+      return cb(new Error(`CORS blocked for origin: ${origin}`), false);
+    },
     credentials: true
   })
 );
 
 app.get("/health", (req, res) => res.json({ ok: true }));
+
+// Optional: nice home route (so / isn't 404)
+app.get("/", (req, res) => {
+  res.json({ name: "AI Resume Screener API", status: "ok" });
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
@@ -36,16 +51,12 @@ app.use("/api/evaluate", evaluateRoutes);
 app.use("/api/evaluate", evaluateBatchRoutes);
 app.use("/api/audit", auditRoutes);
 
-const PORT = process.env.PORT || 8080;
-
-
 async function start() {
-  if (!process.env.MONGO_URI) {
-    throw new Error("Missing MONGO_URI");
-  }
-
+  if (!process.env.MONGO_URI) throw new Error("Missing MONGO_URI");
   await mongoose.connect(process.env.MONGO_URI);
   console.log("✅ MongoDB connected");
+
+  const PORT = Number(process.env.PORT) || 8080;
 
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`✅ Server listening on ${PORT}`);
