@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+
 import auditRoutes from "./routes/audit.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import jobRoutes from "./routes/job.routes.js";
@@ -18,6 +19,7 @@ const app = express();
 app.use(helmet());
 app.use(express.json({ limit: "2mb" }));
 app.use(morgan("dev"));
+
 app.use(
   cors({
     origin: process.env.CLIENT_ORIGIN?.split(",") ?? "*",
@@ -36,18 +38,21 @@ app.use("/api/audit", auditRoutes);
 
 const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`✅ Server listening on ${PORT}`);
-});
 
 async function start() {
-  if (!process.env.MONGO_URI) throw new Error("Missing MONGO_URI");
+  if (!process.env.MONGO_URI) {
+    throw new Error("Missing MONGO_URI");
+  }
+
   await mongoose.connect(process.env.MONGO_URI);
   console.log("✅ MongoDB connected");
-  app.listen(PORT, () => console.log(`✅ Server listening on ${PORT}`));
+
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`✅ Server listening on ${PORT}`);
+  });
 }
 
 start().catch((e) => {
-  console.error(e);
+  console.error("❌ Failed to start server:", e);
   process.exit(1);
 });
