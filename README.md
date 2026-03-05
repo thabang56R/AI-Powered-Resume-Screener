@@ -1,3 +1,5 @@
+![Profile Views](https://komarev.com/ghpvc/?username=thabang56R&color=grey)
+
 # 🚀 AI Resume Screener  
 
 ![CI](https://github.com/thabang56R/AI-Powered-Resume-Screener/actions/workflows/ci.yml/badge.svg)  
