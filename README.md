@@ -1,4 +1,4 @@
-![Profile Views](https://komarev.com/ghpvc/?username=thabang56R&color=pink)
+![Profile Views](https://komarev.com/ghpvc/?username=thabang56R&color=brown)
 
 # 🚀 AI Resume Screener  
 
